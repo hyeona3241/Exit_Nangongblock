@@ -116,7 +116,29 @@ public class TetrisController : MonoBehaviour
         currentBlock.RotateZ();
     }
 
-    private void BlockChange() { /* 블럭 교체 */ }
+    private void BlockChange() 
+    {
+        if (currentBlock == null) return;
+
+        var spawner = FindObjectOfType<TetrisSpawner>();
+        if (spawner == null) return;
+
+        Vector3 target = currentBlock.transform.position;
+        bool ok = spawner.TrySwapWithNext(target);
+
+        if (ok)
+        {
+            currentBlock = spawner.GetTetriminoBlock();
+            // 혹은 SetCurrentBlock 사용:
+            // SetCurrentBlock(spawner.GetTetriminoBlock());
+        }
+        else
+        {
+            // 필요하면 킥 시도…
+            // foreach (var off in new[]{Vector3.right, Vector3.left, Vector3.forward, Vector3.back})
+            //     if (spawner.TrySwapWithNext(target + off)) { currentBlock = spawner.GetTetriminoBlock(); break; }
+        }
+    }
 
     private Vector3 GetCameraRelativeDirection(Vector3 inputDir)
     {

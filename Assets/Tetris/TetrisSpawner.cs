@@ -48,4 +48,28 @@ public class TetrisSpawner : MonoBehaviour
     {
         return currentBlock;
     }
+
+    public bool TrySwapWithNext(Vector3 targetWorldPos)
+    {
+        if (currentBlock == null || nextBlock == null) return false;
+
+        // next를 현재 위치로 옮길 수 있는지 검사 (타워 경계/충돌 포함)
+        Vector3 delta = targetWorldPos - nextBlock.transform.position;
+        if (!nextBlock.CanMove(delta)) return false;  // 못 들어오면 스왑 안 함
+
+        // 스왑
+        var oldCurrent = currentBlock;
+
+        oldCurrent.SetIsSelet(false);                  // 기존 current 비활성
+        nextBlock.transform.position = targetWorldPos; // next를 현재 위치로
+        nextBlock.SetIsSelet(true);                    // 조작 대상 지정
+        currentBlock = nextBlock;                      // 현재 블럭 교체
+
+        // 기존 current를 벤치(넥스트 자리)로
+        oldCurrent.transform.position = spawnPosition;
+        oldCurrent.SetIsSelet(false);
+        nextBlock = oldCurrent;
+
+        return true;
+    }
 }
