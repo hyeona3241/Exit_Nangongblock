@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d139008936d2c6045ae3879ea487c69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tetrisTowerSize: {x: 4, y: 8, z: 4}
+  tetrisTowerSize: {x: 5, y: 8, z: 5}
   fallInterval: 0.5
   tower: {fileID: 1919486209}
   spawner: {fileID: 1919486210}
