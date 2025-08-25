@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 public class TetriminoBlock : MonoBehaviour
 {
     [SerializeField]
-    private BlockType blockType;    //블럭 종류
+    public BlockType blockType;    //블럭 종류
 
     private Material blockMaterial; //블럭 머티리얼
 
@@ -24,8 +24,8 @@ public class TetriminoBlock : MonoBehaviour
 
     private bool isLock; // 블럭이 설치되어 고정상태인가
 
-    [SerializeField]
-    private BlockShapes shapeType; //블럭 모양
+    
+    public BlockShapes shapeType; //블럭 모양
 
     private Vector3[] shapeData;    //블럭 모양에 따른 벡터
 
@@ -89,11 +89,6 @@ public class TetriminoBlock : MonoBehaviour
         if (blockType == BlockType.None)
         {
             //None일 경우 잘못된 블럭 처리 요망
-        }
-
-        if (isLock)
-        {
-
         }
 
         if (!CanMove(Vector3.down))
@@ -164,7 +159,11 @@ public class TetriminoBlock : MonoBehaviour
             }
         }
 
-        Destroy(navigator);
+        if (navigator != null)
+        {
+            Destroy(navigator.gameObject);
+            navigator = null;
+        }
 
         TetrisManager.Instance.CheckTower();
         TetrisManager.Instance.SpawnNextBlock();
@@ -242,14 +241,23 @@ public class TetriminoBlock : MonoBehaviour
     // 타워 좌표로 변경
     private Vector3Int WorldToTowerOffset(Vector3 worldDir)
     {
-        // 기준점을 타워의 (0,0,0) 월드 위치로 설정
+        //// 기준점을 타워의 (0,0,0) 월드 위치로 설정
+        //Vector3 localToTower = worldDir - TetrisManager.Instance.tower.transform.position;
+
+        //// direction이 정사방향 (1단위)이면 캐스팅 가능
+        //return new Vector3Int(
+        //    Mathf.RoundToInt(localToTower.x),
+        //    Mathf.RoundToInt(localToTower.y),
+        //    Mathf.RoundToInt(localToTower.z)
+        //);
+
+        // 안정적 맵핑
         Vector3 localToTower = worldDir - TetrisManager.Instance.tower.transform.position;
 
-        // direction이 정사방향 (1단위)이면 캐스팅 가능
         return new Vector3Int(
-            Mathf.RoundToInt(localToTower.x),
-            Mathf.RoundToInt(localToTower.y),
-            Mathf.RoundToInt(localToTower.z)
+            Mathf.FloorToInt(localToTower.x + 0.0001f),
+            Mathf.FloorToInt(localToTower.y + 0.0001f),
+            Mathf.FloorToInt(localToTower.z + 0.0001f)
         );
     }
 

@@ -119,7 +119,11 @@ public class TetrisTower : MonoBehaviour
     // 스폰 위치 반환
     public Vector3 GetSpawnPosition()
     {
-        Vector3 spawnPos = transform.position + new Vector3(towerSize.x / 2f - 1, towerSize.y - 1, towerSize.z / 2f - 1);
+        int spawnX = (towerSize.x - 1) / 2;
+        int spawnZ = (towerSize.z - 1) / 2;
+        int spawnY = towerSize.y - 1;
+
+        Vector3 spawnPos = transform.position + new Vector3(spawnX, spawnY, spawnZ);
         Debug.Log("[TetrisTower] Spawn Position: " + spawnPos);
         return spawnPos;
     }

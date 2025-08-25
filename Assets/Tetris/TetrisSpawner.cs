@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TetrisGame;
 using UnityEngine;
 
 public class TetrisSpawner : MonoBehaviour
@@ -36,7 +37,16 @@ public class TetrisSpawner : MonoBehaviour
 
         if (newBlock != null)
         {
-            newBlock.transform.position = towerSpawnPosition;
+            // 기본 스폰 위치
+            Vector3 spawnPos = towerSpawnPosition;
+
+            // I 모양이면 한 칸 더 높게 스폰
+            if (newBlock.shapeType == BlockShapes.I) 
+            {
+                spawnPos += Vector3.up;
+            }
+
+            newBlock.transform.position = spawnPos;
             newBlock.SetIsSelet(true);
         }
 

@@ -42,11 +42,6 @@ public class TetrisManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     //타입별 블럭 갯수 카운트
     public void IncreaseTypeBlockCount(BlockType type)

@@ -7,7 +7,7 @@ public static class BlockData
     public static readonly Dictionary<BlockShapes, Vector3[]> Shapes = new()
     {
         { BlockShapes.I, new Vector3[] {
-            new Vector3(-1, 1, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0), new Vector3(2, 1, 0)
+            new Vector3(-1, 0, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(2, 0, 0)
         }},
         { BlockShapes.O, new Vector3[] {
             new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0)
