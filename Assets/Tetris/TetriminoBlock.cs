@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TetrisGame;
+using Unity.VisualScripting;
 
 public class TetriminoBlock : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class TetriminoBlock : MonoBehaviour
     private BlockType blockType;    //블럭 종류
 
     private Material blockMaterial; //블럭 머티리얼
+
+
+    // 테트리스 네비게이터
+    [SerializeField] private TetrisNavigator navigator;
+    [SerializeField] private Material navigatorGhostMaterial;
 
     [SerializeField]
     private Vector3Int localPosition;   //블럭의 타워상 위치
@@ -63,6 +69,16 @@ public class TetriminoBlock : MonoBehaviour
         SpawnBlockVisual();
 
         fallInterval = TetrisManager.Instance.fallInterval;
+
+
+        if (navigator == null)
+        {
+            // 내 자식으로 Navigator를 하나 붙인다 (인스펙터에 미리 배치해도 OK)
+            var go = new GameObject("TetrisNavigator");
+            go.transform.SetParent(this.transform, false);
+            navigator = go.AddComponent<TetrisNavigator>();
+        }
+        navigator.Initialize(this, navigatorGhostMaterial);
     }
 
     // Update is called once per frame
@@ -147,6 +163,8 @@ public class TetriminoBlock : MonoBehaviour
                 child.BlockLock();
             }
         }
+
+        Destroy(navigator);
 
         TetrisManager.Instance.CheckTower();
         TetrisManager.Instance.SpawnNextBlock();
