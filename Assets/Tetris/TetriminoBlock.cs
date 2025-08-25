@@ -86,9 +86,15 @@ public class TetriminoBlock : MonoBehaviour
     {
         if (!isSelect) return;
 
+
         if (blockType == BlockType.None)
         {
             //None老 版快 肋给等 喉钒 贸府 夸噶
+        }
+
+        if (isLock)
+        {
+            // 遏等 喉钒老 锭父 贸府
         }
 
         if (!CanMove(Vector3.down))
