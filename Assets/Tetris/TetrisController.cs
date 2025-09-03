@@ -87,7 +87,7 @@ public class TetrisController : MonoBehaviour
     {
         if (currentBlock == null) return;
 
-        // 안전 가드(무한루프 방지): 최대 하강 횟수 = 타워 높이
+        // 최대 하강 횟수 = 타워 높이
         int guard = TetrisManager.Instance.tetrisTowerSize.y;
 
         while (guard-- > 0 && currentBlock.CanMove(Vector3.down))
@@ -129,14 +129,6 @@ public class TetrisController : MonoBehaviour
         if (ok)
         {
             currentBlock = spawner.GetTetriminoBlock();
-            // 혹은 SetCurrentBlock 사용:
-            // SetCurrentBlock(spawner.GetTetriminoBlock());
-        }
-        else
-        {
-            // 필요하면 킥 시도…
-            // foreach (var off in new[]{Vector3.right, Vector3.left, Vector3.forward, Vector3.back})
-            //     if (spawner.TrySwapWithNext(target + off)) { currentBlock = spawner.GetTetriminoBlock(); break; }
         }
     }
 

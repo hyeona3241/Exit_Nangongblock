@@ -91,13 +91,11 @@ public class TetrisTower : MonoBehaviour
             }
         }
 
-        //실제 블록 오브젝트도 이동/삭제 필요
-        //현재 배열 정보만 갱신되고 있음
         var blocks = FindObjectsOfType<TetriminoBlock>();
         foreach (var b in blocks)
         {
             b.ApplyLineClear(y);
-            b.CleanupIfEmpty();  // (수정 2에서 추가할 간단 유틸)
+            b.CleanupIfEmpty();
         }
     }
 

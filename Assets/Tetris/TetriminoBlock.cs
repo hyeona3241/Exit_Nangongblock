@@ -79,6 +79,7 @@ public class TetriminoBlock : MonoBehaviour
             navigator = go.AddComponent<TetrisNavigator>();
         }
         navigator.Initialize(this, navigatorGhostMaterial);
+        navigator.gameObject.SetActive(isSelect);
     }
 
     // Update is called once per frame
@@ -132,6 +133,9 @@ public class TetriminoBlock : MonoBehaviour
     public void SetIsSelet(bool selet)
     {
         isSelect = selet;
+
+        if (navigator != null)
+            navigator.gameObject.SetActive(isSelect);
     }
 
     public void BlockLock()
@@ -247,17 +251,6 @@ public class TetriminoBlock : MonoBehaviour
     // 타워 좌표로 변경
     private Vector3Int WorldToTowerOffset(Vector3 worldDir)
     {
-        //// 기준점을 타워의 (0,0,0) 월드 위치로 설정
-        //Vector3 localToTower = worldDir - TetrisManager.Instance.tower.transform.position;
-
-        //// direction이 정사방향 (1단위)이면 캐스팅 가능
-        //return new Vector3Int(
-        //    Mathf.RoundToInt(localToTower.x),
-        //    Mathf.RoundToInt(localToTower.y),
-        //    Mathf.RoundToInt(localToTower.z)
-        //);
-
-        // 안정적 맵핑
         Vector3 localToTower = worldDir - TetrisManager.Instance.tower.transform.position;
 
         return new Vector3Int(
